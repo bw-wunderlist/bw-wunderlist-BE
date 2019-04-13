@@ -2,6 +2,9 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("../../auth/secrets.js").jwtSecret;
+const UIDGenerator = require('uid-generator');
+const uidgen = new UIDGenerator(256, UIDGenerator.BASE62);
+
 
 const db = require("../../data/dbConfig.js");
 
@@ -9,7 +12,7 @@ const router = express.Router();
 
 function generateToken(user) {
   const payload = {
-    subject: user.id,
+    subject: user.uid,
     username: user.username
   };
   const options = {
@@ -37,10 +40,13 @@ router.post("/register", async (req, res) => {
   }
   const hash = bcrypt.hashSync(regData.password, 12);
   regData.password = hash;
+  const uid = uidgen.generateSync();
+  regData.uid = uid;
   try {
-    const userID = await db("users").insert(regData);
-    const token = generateToken(userID);
-    res.status(201).json({ userID, token });
+    await db("users").insert(regData);
+    const user = {uid: regData.uid, username: regData.username}
+    const token = generateToken(user);
+    res.status(201).json({ token });
   } catch (err) {
     res.status(500).json({ message: `Internal Error, ${err}` });
   }

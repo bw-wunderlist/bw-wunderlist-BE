@@ -4631,6 +4631,11 @@ uglify-js@^3.1.4:
     commander "~2.20.0"
     source-map "~0.6.1"
 
+uid-generator@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/uid-generator/-/uid-generator-1.0.0.tgz#cc4fb69bdcf3b51ca369640d70b0e93b0ecd3d9c"
+  integrity sha512-tx0ni0iyF4CZVNP8bAxcK3PNmtQcJPdflpy6lVW1lPIhTEuPoKR+o88auoXi3mFKLZ7nItCeMRp9GyFFbZ4f3w==
+
 unc-path-regex@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/unc-path-regex/-/unc-path-regex-0.1.2.tgz#e73dd3d7b0d7c5ed86fbac6b0ae7d8c6a69d50fa"
@@ -4652,6 +4657,11 @@ union-value@^1.0.0:
     get-value "^2.0.6"
     is-extendable "^0.1.1"
     set-value "^0.4.3"
+
+uniqid@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-5.0.3.tgz#917968310edc868d50df6c44f783f32c7d80fac1"
+  integrity sha512-R2qx3X/LYWSdGRaluio4dYrPXAJACTqyUjuyXHoJLBUOIfmMcnYOyY2d6Y4clZcIz5lK6ZaI0Zzmm0cPfsIqzQ==
 
 unique-string@^1.0.0:
   version "1.0.0"
