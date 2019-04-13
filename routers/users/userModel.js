@@ -16,7 +16,7 @@ async function findById(id) {
 async function updateById(data, id) {
   const user = await db("users")
     .where({ uid: id })
-    .update({ ...data });
+    .update({ email: data.email, imageUrl: data.imageUrl });
   return user;
 }
 
