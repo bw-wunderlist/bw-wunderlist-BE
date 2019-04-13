@@ -1,18 +1,27 @@
 const db = require("../../data/dbConfig.js");
 
 module.exports = {
-  findById
+  findById,
+  updateById,
+  removeUser
 };
 
-function findById(id) {
-  return db("users")
+async function findById(id) {
+  return (users = await db("users")
     .where({ uid: id })
     .select("username", "email", "imageUrl")
-    .first();
+    .first());
 }
 
-function updateById(data, id) {
-  return db("users")
+async function updateById(data, id) {
+  const user = await db("users")
     .where({ uid: id })
     .update({ ...data });
+  return user;
+}
+
+async function removeUser(id) {
+  const task = await db("users")
+    .where({ uid: id })
+    .del();
 }

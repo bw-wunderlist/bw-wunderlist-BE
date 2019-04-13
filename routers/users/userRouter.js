@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const id = req.decoded.subject;
+  console.log(id);
   try {
     const user = await userModel.findById(id);
-    res.status(200).json(users);
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -17,7 +18,22 @@ router.put("/", async (req, res) => {
   const id = req.decoded.subject;
   try {
     const update = await userModel.updateById(req.body, id);
-    res.status(204).json(update);
+    if (update > 0) {
+      res.status(200).json({ message: `The user has been updated! ${update}` });
+    } else {
+      res.status(404).json({ message: `Bad request, nothing updated!` });
+    }
+  } catch (err) {
+    res.status(500).json({ message: `Internal Error, ${err}` });
+  }
+});
+
+router.delete("/", async (req, res) => {
+  const id = req.decoded.subject;
+  const username = req.decoded.username;
+  const remove = await userModel.removeUser(id);
+  try {
+    res.status(200).json({ message: `user removed! ${username}` });
   } catch (err) {
     res.status(500).json({ message: `Internal Error, ${err}` });
   }
