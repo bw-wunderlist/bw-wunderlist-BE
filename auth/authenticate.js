@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const jwtKey =
-  process.env.JWT_SECRET ||
-  `what up wunderlist v2.0 build week! There is no need to read this I am just making it long ; )`;
+const secret = require("./secrets").jwtSecret;
 
 module.exports = {
   authenticate
@@ -10,9 +8,8 @@ module.exports = {
 
 function authenticate(req, res, next) {
   const token = req.headers.authorization;
-
   if (token) {
-    jwt.verify(token, jwtKey, (err, decoded) => {
+    jwt.verify(token, secret, (err, decoded) => {
       if (err) return res.status(401).json(err);
 
       req.decoded = decoded;

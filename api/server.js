@@ -6,9 +6,10 @@ const cors = require("cors");
 const { authenticate } = require("../auth/authenticate.js");
 
 // ROUTER IMPORTS
-//const registerRouter = require('../register/registerRouter.js')
-//const loginRouter = require('../')
 const authRouter = require("../routers/auth/authRouter.js");
+const userRouter = require("../routers/users/userRouter");
+const tasksRouter = require('../routers/tasks/tasksRouter')
+
 
 const server = express();
 
@@ -19,7 +20,8 @@ server.use(helmet());
 
 // ROUTERS
 server.use("/api/auth", authRouter);
-// server.use("/api/tasks", authenticate, tasksRouter);
+server.use("/api/user", userRouter)
+server.use("/api/tasks", authenticate, tasksRouter);
 
 //  GET ENDPOINT FOR /
 server.get("/", async (req, res) => {
