@@ -6,6 +6,12 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique("username");
     tbl.string("password", 128).notNullable();
+    tbl
+      .string("email", 128)
+      .notNullable()
+      .unique("email");
+    tbl.timestamps();
+    tbl.string("imageUrl", 255).notNullable();
   });
 };
 
