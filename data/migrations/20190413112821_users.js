@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
       .string("email", 128)
       .notNullable()
       .unique("email");
-    tbl.timestamps();
+    tbl.timestamps("createdAt").defaultTo(knex.fn.now());
     tbl.string("imageUrl", 255).notNullable();
   });
 };
