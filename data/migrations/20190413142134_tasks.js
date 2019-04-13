@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-    tbl.timestamp("createdAt").defaultTo(knex.fn.now());
+    //tbl.timestamp("createdAt").defaultTo(knex.fn.now());
   });
 };
 
