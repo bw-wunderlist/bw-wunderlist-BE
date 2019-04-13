@@ -10,6 +10,9 @@ const authRouter = require("../routers/auth/authRouter.js");
 const userRouter = require("../routers/users/userRouter");
 const tasksRouter = require('../routers/tasks/tasksRouter')
 
+//! Delete before Production
+const testsRouter = require('../routers/tests/testRouter')
+
 
 const server = express();
 
@@ -20,8 +23,10 @@ server.use(helmet());
 
 // ROUTERS
 server.use("/api/auth", authRouter);
-server.use("/api/user", userRouter)
+server.use("/api/user", authenticate, userRouter)
 server.use("/api/tasks", authenticate, tasksRouter);
+
+server.use('/api/tests', testsRouter)
 
 //  GET ENDPOINT FOR /
 server.get("/", async (req, res) => {

@@ -4,7 +4,7 @@ const uidgen = new UIDGenerator(256, UIDGenerator.BASE62);
 exports.seed = function(knex, Promise) {
   return knex("users").insert([
     {
-      uid: uidgen.generateSync(),
+      uid: "DnuzdSXCtMgmRWDCRRE1iQ",
       username: "Jon",
       password: bcrypt.hashSync("qwerty"),
       email: "jon@google.com",
