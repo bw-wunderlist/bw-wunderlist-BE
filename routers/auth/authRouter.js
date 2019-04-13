@@ -1,14 +1,9 @@
 const express = require("express");
-const knex = require("knex");
-const knexConfig = require("../knexfile.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const secret = require("../auth/secrets.js").jwtSecret;
+const secret = require("../../auth/secrets.js").jwtSecret;
 
-const db = require("../data/dbConfig.js");
-const Users = require("./user-model.js");
-
-const { authenticate } = require("../auth/authenticate.js");
+const db = require("../../data/dbConfig.js");
 
 const router = express.Router();
 
@@ -23,8 +18,7 @@ function generateToken(user) {
   return jwt.sign(payload, secret, options);
 }
 
-async function register(req, res) {
-  // implement user registration
+router.post("/register", async (req, res) => {
   const regData = req.body;
   if (!regData.username || !regData.password) {
     res.Status(400).json({ message: `Must provide all Info. Bad Request` });
@@ -50,10 +44,9 @@ async function register(req, res) {
   } catch (err) {
     res.status(500).json({ message: `Internal Error, ${err}` });
   }
-}
+});
 
-async function login(req, res) {
-  // implement user login
+router.post('/login', async (req, res) => {
   const loginData = req.body;
   if (!loginData.username || !loginData.password) {
     res
@@ -73,19 +66,6 @@ async function login(req, res) {
   } catch (err) {
     res.status(500).json({ message: `Internal Error, ${err}` });
   }
-}
-
-router.get("/", async (req, res) => {
-  try {
-    const users = await Users.find();
-    res.status(200).json(users);
-  } catch (err) {
-    res.status(500).json({ message: `Internal Error, ${err}` });
-  }
 });
-
-//router.post('/', register, async (req, res) => {
-
-//})
 
 module.exports = router;

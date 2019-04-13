@@ -2,7 +2,7 @@ module.exports = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./data/wunderlist.db3"
+      filename: "./data/db/wunderlist.db3"
     },
     useNullAsDefault: true,
     migrations: {
