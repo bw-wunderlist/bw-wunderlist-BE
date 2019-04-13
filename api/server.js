@@ -1,12 +1,14 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
 
-// DB IMPORT
-const db = require("../data/dbConfig.js");
+// AUTHENTICATION IMPORT
+const { authenticate } = require("../auth/authenticate.js");
+
 // ROUTER IMPORTS
-const usersRouter = require("../users/userRouter.js");
+//const registerRouter = require('../register/registerRouter.js')
+//const loginRouter = require('../')
+const authRouter = require("../routers/auth/authRouter.js");
 
 const server = express();
 
@@ -16,7 +18,8 @@ server.use(cors());
 server.use(helmet());
 
 // ROUTERS
-server.use("/api/users", usersRouter);
+server.use("/api/auth", authRouter);
+// server.use("/api/tasks", authenticate, tasksRouter);
 
 //  GET ENDPOINT FOR /
 server.get("/", async (req, res) => {
