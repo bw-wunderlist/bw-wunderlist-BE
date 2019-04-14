@@ -1,17 +1,21 @@
 # Auth
 
-This is the docs for user auth
+Created: Apr 13, 2019 9:28 PM
+Last Updated: Apr 13, 2019 10:36 PM
+Tags: Tested
+of End Points: 2
+
+**Table Of Contents**
+
+1. User Register
+2. User Login
 
 ---
 
-# User Register
-
-Api End Point
+# 1. User Register
 
 > Type: Post
-localhost:5000/api/auth/register
-
----
+/api/auth/register
 
 ### Send
 
@@ -30,14 +34,12 @@ Status: 201
     	"token": "user auth token"
     }
 
-# User Login
+---
 
-Api end point
+# 2. User Login
 
 > Type: Post
 /api/auth/login
-
----
 
 ### Send
 

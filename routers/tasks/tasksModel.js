@@ -7,13 +7,15 @@ module.exports = {
 };
 
 function getAllByUserId(id) {
-  return db("tasks").where({ user_id: id });
+  return db("tasks")
+    .where({ user_id: id })
+    .select("id", "name", "is_complete");
 }
 
-function getById(id, userId) {
-  return db("tasks").where({ id: id, user_id: userId });
+function getById(id) {
+  return db("tasks").where({ id: id }).first();
 }
 
-function addTask(task, userId){
-  return db("tasks").insert({...task, user_id: userId});
+function addTask(task, userId) {
+  return db("tasks").insert({ ...task, user_id: userId });
 }
