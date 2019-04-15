@@ -1,3 +1,12 @@
+const localPg = {
+  host: 'localhost',
+  database: 'tasks',
+  user: 'user',
+  password: 'hired',
+};
+
+const productionDbConnection = process.env.DATABASE_URL || localPg;
+
 module.exports = {
   development: {
     client: "sqlite3",
@@ -15,7 +24,7 @@ module.exports = {
   testing: {
     client: "sqlite3",
     connection: {
-      filename: "./data/test.db3"
+      filename: "./data/db/test.db3"
     },
     useNullAsDefault: true,
     migrations: {
@@ -24,39 +33,15 @@ module.exports = {
     seeds: {
       directory: "/data/seeds"
     }
+  },
+  production: {
+    client: "pg",
+    connection: productionDbConnection,
+    migrations: {
+      directory: "./data/migrations"
+    },
+    seeds: {
+      directory: "./data/seeds"
+    }
   }
 };
-
-//staging: {
-//client: 'postgresql',
-//connection: {
-//database: 'my_db',
-//user:     'username',
-//password: 'password'
-//},
-//pool: {
-//min: 2,
-//max: 10
-//},
-//migrations: {
-//tableName: 'knex_migrations'
-//}
-//},
-
-//production: {
-//client: 'postgresql',
-//connection: {
-//database: 'my_db',
-//user:     'username',
-//password: 'password'
-//},
-//pool: {
-//min: 2,
-//max: 10
-//},
-//migrations: {
-//tableName: 'knex_migrations'
-//}
-//}
-
-//};

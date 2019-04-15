@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const id = req.decoded.subject;
-  console.log(id);
   try {
     const user = await userModel.findById(id);
     res.status(200).json(user);
