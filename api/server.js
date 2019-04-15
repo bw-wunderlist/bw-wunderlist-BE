@@ -9,10 +9,6 @@ const { authenticate } = require("../auth/authenticate.js");
 const authRouter = require("../routers/auth/authRouter.js");
 const userRouter = require("../routers/users/userRouter");
 const tasksRouter = require("../routers/tasks/tasksRouter");
-
-//! Delete before Production
-const testsRouter = require("../routers/tests/testRouter");
-
 const server = express();
 
 //MIDDLEWARE
@@ -26,6 +22,7 @@ server.use("/api/user", authenticate, userRouter);
 server.use("/api/tasks", authenticate, tasksRouter);
 
 if (process.env.allow_debug) {
+  const testsRouter = require("../routers/tests/testRouter");
   server.use("/api/tests", testsRouter);
 }
 //  GET ENDPOINT FOR /
