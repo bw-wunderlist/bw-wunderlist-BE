@@ -26,7 +26,7 @@ server.use("/api/auth", authRouter);
 server.use("/api/user", authenticate, userRouter)
 server.use("/api/tasks", authenticate, tasksRouter);
 
-server.use('/api/tests', testsRouter)
+// server.use('/api/tests', testsRouter)
 
 //  GET ENDPOINT FOR /
 server.get("/", async (req, res) => {
