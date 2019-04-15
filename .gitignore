@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
 # Runtime data
 pids
 *.pid
@@ -72,3 +73,5 @@ yarn-error.log
 package-lock.json
 
 data/db/
+data/db/test.db3
+data/db/wunderlist.db3
