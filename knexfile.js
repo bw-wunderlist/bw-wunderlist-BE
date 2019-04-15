@@ -1,11 +1,11 @@
 const localPg = {
   host: 'localhost',
-  database: 'tasks',
+  database: 'wunderlist',
   user: 'user',
   password: 'hired',
 };
 
-const productionDbConnection = process.env.DATABASE_URL || localPg;
+const prodDbConnection = process.env.DATABASE_URL || localPg;
 
 module.exports = {
   development: {
@@ -36,7 +36,7 @@ module.exports = {
   },
   production: {
     client: "pg",
-    connection: productionDbConnection,
+    connection: prodDbConnection,
     migrations: {
       directory: "./data/migrations"
     },
