@@ -9,7 +9,7 @@ module.exports = {
 function getAllByUserId(id) {
   return db("tasks")
     .where({ user_id: id })
-    .select("id", "name", "is_complete");
+    .select("id", "name", "desc", "is_complete");
 }
 
 function getById(id) {
