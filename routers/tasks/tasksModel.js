@@ -5,13 +5,14 @@ module.exports = {
   getById,
   addTask,
   updateTask,
-  removeTask
+  removeTask,
+  completeById
 };
 
 function getAllByUserId(id) {
   return db("tasks")
     .where({ user_id: id })
-    .select("id", "name", "desc", "is_complete");
+    .select("id", "name", "desc", "is_complete", "due_date", "repeat", "repeat_condition", "occurred");
 }
 
 function getById(id) {
@@ -21,7 +22,13 @@ function getById(id) {
 }
 
 function addTask(task, userId) {
-  return db("tasks").insert({ ...task, user_id: userId });
+  return db("tasks").insert({...task, repeat_condition: JSON.stringify(task.repeat_condition), user_id: userId });
+}
+
+function completeById(id, currentStatus) {
+  return db("tasks")
+    .where({ id })
+    .update({ is_complete: !currentStatus });
 }
 
 function updateTask(id, taskChanges, uid) {

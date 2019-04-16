@@ -4,6 +4,8 @@ const router = express.Router();
 
 const Tasks = require("./tasksModel");
 
+const moment = require("moment");
+
 // GET ALL TASKS BY USERS ID
 router.get("/", async (req, res) => {
   const id = req.decoded.subject;
@@ -28,6 +30,57 @@ router.get("/:id", async (req, res) => {
           name: task.name,
           is_complete: task.is_complete
         });
+      } else {
+        res.status(405).json({ message: "Not Your Task" });
+      }
+    } else {
+      res.status(404).json({ message: "Task Not Found" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/complete/:id", async (req, res) => {
+  const { id } = req.params;
+  const userId = req.decoded.subject;
+  try {
+    const task = await Tasks.getById(id);
+    if (task) {
+      if (task.user_id === userId) {
+        if (task.repeat) {
+          const repeatCondition = JSON.parse(task.repeat_condition);
+          if (task.occurred >= repeatCondition.occurrences) {
+            await Tasks.completeById(id, task.is_complete);
+            res
+              .status(200)
+              .json({
+                message: `Task is ${
+                  !task.is_complete ? "complete" : "not complete"
+                }`
+              });
+          } else {
+            const newDate = moment
+              .unix(task.due_date)
+              .add(repeatCondition.number, repeatCondition.timeframe)
+              .unix();
+            await Tasks.updateTask(
+              id,
+              { due_date: newDate, occurred: task.occurred + 1 },
+              userId
+            );
+            res.status(200).json({ message: "Create", nextTime: moment.unix(newDate).calendar(), occurred: task.occurred });
+          }
+        } else {
+          await Tasks.completeById(id, task.is_complete);
+          res
+            .status(200)
+            .json({
+              message: `Task is ${
+                !task.is_complete ? "complete" : "not complete"
+              }`
+            });
+        }
       } else {
         res.status(405).json({ message: "Not Your Task" });
       }

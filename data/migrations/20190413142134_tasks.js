@@ -12,15 +12,11 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE");
     tbl.string("desc", 255);
     tbl.boolean("is_complete").defaultTo(false);
-    //tbl.date("due_date");
-    //tbl.time("time");
-    //tbl.datetime('time_and_date')
-    tbl.boolean("repeat");
-    //tbl.string("yyyy-mm-dd", 128).notNullable();
+    tbl.integer("due_date");
+    tbl.boolean("repeat").defaultTo(false);
+    tbl.json('repeat_condition');
+    tbl.integer('occurred').defaultTo(0);
     tbl.timestamps(true, true);
-    //tbl.string("years");
-    //tbl.string("months");
-    //tbl.string("days");
   });
 };
 
