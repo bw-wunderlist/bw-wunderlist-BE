@@ -19,6 +19,42 @@ describe(`tasksModel`, () => {
     });
   });
 
+  describe(`getById`, () => {
+    it("should get back single task matching id", async () => {
+      await Tasks.addTask({ name: "testing" }, "DnuzdSXCtMgmRWDCRRE1iQ");
+      const tasks = await Tasks.getById("DnuzdSXCtMgmRWDCRRE1iQ");
+      console.log(tasks);
+      expect(tasks).toBeDefined();
+    });
+  });
+
+  describe("addTask", () => {
+    it.skip(`should add a task`, async () => {
+      await Tasks.addTask({ name: "addtask test" }, "DnuzdSXCtMgmRWDCRRE1iQ");
+      const tasks = await Tasks.getAllByUserId("DnuzdSXCtMgmRWDCRRE1iQ");
+      console.log(tasks);
+      expect(tasks).toHaveLength(1);
+    });
+  });
+
+  describe("completeById", () => {
+    it.skip("should mark task completed", async () => {
+      console.log("test will go here");
+    });
+  });
+
+  describe("updateTask", () => {
+    it.skip("should update a task", async () => {
+      await Tasks.updateTask();
+    });
+  });
+
+  describe("removeTask", () => {
+    it.skip("should remove task", async () => {
+      await Tasks.removeTask();
+    });
+  });
+
   describe(`Test Date Adder`, () => {
     it('add 1 day to current date', async () => {
       const newDate = await Tasks.addToRepeat(moment().unix(), {number: 1, timeframe: "days"});
