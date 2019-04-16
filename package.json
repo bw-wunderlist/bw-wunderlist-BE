@@ -31,12 +31,12 @@
     "moment": "^2.24.0",
     "pg": "^7.9.0",
     "sqlite3": "^4.0.6",
-    "uid-generator": "^1.0.0"
+    "uid-generator": "^1.0.0",
+    "knex-cleaner": "^1.1.4"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "jest": "^24.7.1",
-    "knex-cleaner": "^1.1.4",
     "nodemon": "^1.18.11",
     "supertest": "^4.0.2"
   },
