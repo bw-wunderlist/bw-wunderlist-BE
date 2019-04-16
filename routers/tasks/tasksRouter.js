@@ -64,9 +64,15 @@ router.get("/complete/:id", async (req, res) => {
             });
           } else {
             let newDate = 0;
-            newDate = moment.unix(task.due_date).add(repeatCondition.number, repeatCondition.timeframe).unix();
-            while(newDate < moment().unix()) {
-              newDate = moment.unix(newDate).add(repeatCondition.number, repeatCondition.timeframe).unix();
+            newDate = moment
+              .unix(task.due_date)
+              .add(repeatCondition.number, repeatCondition.timeframe)
+              .unix();
+            while (newDate < moment().unix()) {
+              newDate = moment
+                .unix(newDate)
+                .add(repeatCondition.number, repeatCondition.timeframe)
+                .unix();
             }
             let timesOccured = task.occurred + 1;
             await Tasks.updateTask(
@@ -74,14 +80,12 @@ router.get("/complete/:id", async (req, res) => {
               { due_date: newDate, occurred: timesOccured },
               userId
             );
-            res
-              .status(200)
-              .json({
-                message: "Task Repeated",
-                is_complete: task.is_complete,
-                nextTime: newDate,
-                occurred: timesOccured
-              });
+            res.status(200).json({
+              message: "Task Repeated",
+              is_complete: task.is_complete,
+              nextTime: newDate,
+              occurred: timesOccured
+            });
           }
         } else {
           await Tasks.completeById(id, task.is_complete);

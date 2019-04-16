@@ -37,18 +37,34 @@ describe(`tasksModel`, () => {
 
   describe("completeById", () => {
     it("should mark task completed", async () => {
-      const taskId = await Tasks.addTask({ name: "task name", }, "DnuzdSXCtMgmRWDCRRE1iQ");
+      const taskId = await Tasks.addTask(
+        { name: "task name" },
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
       let task = await Tasks.getById(taskId[0]);
-      expect(task.is_complete).toEqual(0)
+      expect(task.is_complete).toEqual(0);
       await Tasks.completeById(taskId[0], task.is_complete);
       task = await Tasks.getById(taskId[0]);
-      expect(task.is_complete).toEqual(1)
+      expect(task.is_complete).toEqual(1);
     });
   });
 
   describe("updateTask", () => {
-    it.skip("should update a task", async () => {
-      await Tasks.updateTask();
+    it("should update a task", async () => {
+      const taskId = await Tasks.addTask(
+        { name: "tesing task1" },
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
+      console.log(taskId);
+      let task = await Tasks.updateTask(
+        taskId[0],
+        { name: "update" },
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
+      console.log(task);
+      task = await Tasks.getById(taskId[0]);
+      console.log(task);
+      expect(task.name).toEqual("update");
     });
   });
 
