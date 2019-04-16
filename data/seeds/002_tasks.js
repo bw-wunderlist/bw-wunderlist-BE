@@ -1,10 +1,28 @@
 const moment = require('moment')
+const faker = require("faker");
 
 const repeatIt = JSON.stringify({
   number: 1,
   timeframe: "days",
   occurrences: 5,
 })
+
+const tasks = []
+
+for (let i = 0; i < 100; i++) {
+  tasks.push({
+    name: faker.commerce.productName(),
+    desc: faker.lorem.sentence(),
+    user_id: "DnuzdSXCtMgmRWDCRRE1iQ",
+    due_date: moment(faker.date.future()).unix(),
+    repeat: faker.random.boolean(),
+    repeat_condition: JSON.stringify({
+      number: Math.floor((Math.random() * 365) + 1),
+      timeframe: 'days',
+      occurrences: Math.floor((Math.random() * 20) + 1),
+    })
+  })
+}
 
 exports.seed = function(knex, Promise) {
   return knex("tasks").insert([
@@ -31,6 +49,7 @@ exports.seed = function(knex, Promise) {
       due_date: moment().add(10,'day').unix(),
       repeat: 1,
       repeat_condition: "test"
-    }
+    },
+    ...tasks
   ]);
 };
