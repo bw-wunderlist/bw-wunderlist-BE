@@ -69,8 +69,18 @@ describe(`tasksModel`, () => {
   });
 
   describe("removeTask", () => {
-    it.skip("should remove task", async () => {
-      await Tasks.removeTask();
+    it("should remove task", async () => {
+      const taskId = await Tasks.addTask(
+        { name: "testing remove" },
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
+      console.log(taskId);
+      const removed = await Tasks.removeTask(
+        taskId[0],
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
+      console.log(removed);
+      expect(removed).toBe(1);
     });
   });
 
