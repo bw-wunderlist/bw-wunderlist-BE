@@ -1,6 +1,29 @@
 const bcrypt = require("bcryptjs");
 const UIDGenerator = require("uid-generator");
 const uidgen = new UIDGenerator(256, UIDGenerator.BASE62);
+
+const faker = require("faker");
+
+const person = {
+  uid: uidgen.generateSync(),
+  username: faker.internet.userName(),
+  password: bcrypt.hashSync(faker.internet.password()),
+  email: faker.internet.email(),
+  imageUrl: faker.internet.avatar()
+};
+
+const people = [];
+
+for (let i = 0; i < 100; i++) {
+  people.push({
+    uid: uidgen.generateSync(),
+    username: faker.internet.userName(),
+    password: bcrypt.hashSync(faker.internet.password()),
+    email: faker.internet.email(),
+    imageUrl: faker.internet.avatar()
+  });
+}
+
 exports.seed = function(knex, Promise) {
   return knex("users").insert([
     {
@@ -23,6 +46,7 @@ exports.seed = function(knex, Promise) {
       password: bcrypt.hashSync("pasta"),
       email: "kevin@ubilink.com",
       imageUrl: "https://randomuser.me/api/portraits/men/21.jpg"
-    }
+    },
+    ...people
   ]);
 };

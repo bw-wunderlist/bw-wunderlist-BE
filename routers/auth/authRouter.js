@@ -2,9 +2,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("../../auth/secrets.js").jwtSecret;
-const UIDGenerator = require('uid-generator');
+const UIDGenerator = require("uid-generator");
 const uidgen = new UIDGenerator(256, UIDGenerator.BASE62);
-
 
 const db = require("../../data/dbConfig.js");
 
@@ -40,11 +39,15 @@ router.post("/register", async (req, res) => {
   }
   const hash = bcrypt.hashSync(regData.password, 12);
   regData.password = hash;
-  const uid = uidgen.generateSync();
-  regData.uid = uid;
+  regData.uid = uidgen.generateSync();
   try {
     await db("users").insert(regData);
-    const user = {uid: regData.uid, username: regData.username}
+    await db("tasks").insert({
+      name: "Welcome to Wunderlist",
+      desc: "Using Wunderlist is really easy just make a task and see.",
+      user_id: regData.uid
+    });
+    const user = { uid: regData.uid, username: regData.username };
     const token = generateToken(user);
     res.status(201).json({ token });
   } catch (err) {
@@ -52,7 +55,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const loginData = req.body;
   if (!loginData.username || !loginData.password) {
     res
