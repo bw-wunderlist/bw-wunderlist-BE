@@ -37,10 +37,12 @@ describe(`tasksModel`, () => {
 
   describe("completeById", () => {
     it("should mark task completed", async () => {
-      await Tasks.addTask("DnuzdSXCtMgmRWDCRRE1iQ", { repeat: true });
-      const tasks = await Tasks.getById(taskId[0]);
-      await Tasks.completeById("DnuzdSXCtMgmRWDCRRE1iQ", { repeat: true });
-      expect(tasks.repeat).toBe(false);
+      const taskId = await Tasks.addTask({ name: "task name", }, "DnuzdSXCtMgmRWDCRRE1iQ");
+      let task = await Tasks.getById(taskId[0]);
+      expect(task.is_complete).toEqual(0)
+      await Tasks.completeById(taskId[0], task.is_complete);
+      task = await Tasks.getById(taskId[0]);
+      expect(task.is_complete).toEqual(1)
     });
   });
 
