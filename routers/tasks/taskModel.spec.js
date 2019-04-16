@@ -1,7 +1,7 @@
 const db = require("../../data/dbConfig.js");
 const Tasks = require("./tasksModel.js");
 
-const moment = require('moment')
+const moment = require("moment");
 
 describe(`tasksModel`, () => {
   afterEach(async () => {
@@ -18,7 +18,10 @@ describe(`tasksModel`, () => {
 
   describe(`getById`, () => {
     it("should get back single task matching id", async () => {
-      const taskId = await Tasks.addTask({ name: "testing" }, "DnuzdSXCtMgmRWDCRRE1iQ");
+      const taskId = await Tasks.addTask(
+        { name: "testing" },
+        "DnuzdSXCtMgmRWDCRRE1iQ"
+      );
       const tasks = await Tasks.getById(taskId[0]);
       expect(tasks).toBeDefined();
     });
@@ -33,8 +36,11 @@ describe(`tasksModel`, () => {
   });
 
   describe("completeById", () => {
-    it.skip("should mark task completed", async () => {
-      console.log("test will go here");
+    it("should mark task completed", async () => {
+      await Tasks.addTask("DnuzdSXCtMgmRWDCRRE1iQ", { repeat: true });
+      const tasks = await Tasks.getById(taskId[0]);
+      await Tasks.completeById("DnuzdSXCtMgmRWDCRRE1iQ", { repeat: true });
+      expect(tasks.repeat).toBe(false);
     });
   });
 
@@ -51,15 +57,35 @@ describe(`tasksModel`, () => {
   });
 
   describe(`Test Date Adder`, () => {
-    it('add 1 day to current date', async () => {
-      const newDate = await Tasks.addToRepeat(moment().unix(), {number: 1, timeframe: "days"});
-      expect(newDate).toBe(moment().add(1, 'days').unix())
-    })
+    it("add 1 day to current date", async () => {
+      const newDate = await Tasks.addToRepeat(moment().unix(), {
+        number: 1,
+        timeframe: "days"
+      });
+      expect(newDate).toBe(
+        moment()
+          .add(1, "days")
+          .unix()
+      );
+    });
 
-    it('add days until future', async () => {
-      const input = moment().subtract(1, 'hours').unix()
-      const newDate = await Tasks.addToRepeat(moment.unix(input).subtract(5, 'days').unix(), {number: 1, timeframe: "days"});
-      expect(newDate).toBe(moment.unix(input).add(1, 'days').unix())
-    })
-  })
+    it("add days until future", async () => {
+      const input = moment()
+        .subtract(1, "hours")
+        .unix();
+      const newDate = await Tasks.addToRepeat(
+        moment
+          .unix(input)
+          .subtract(5, "days")
+          .unix(),
+        { number: 1, timeframe: "days" }
+      );
+      expect(newDate).toBe(
+        moment
+          .unix(input)
+          .add(1, "days")
+          .unix()
+      );
+    });
+  });
 });
