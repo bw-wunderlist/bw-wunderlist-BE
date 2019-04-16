@@ -50,6 +50,5 @@ exports.seed = function(knex, Promise) {
       repeat: 1,
       repeat_condition: "test"
     },
-    ...tasks
   ]);
 };

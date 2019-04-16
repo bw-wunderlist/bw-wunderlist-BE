@@ -47,6 +47,5 @@ exports.seed = function(knex, Promise) {
       email: "kevin@ubilink.com",
       imageUrl: "https://randomuser.me/api/portraits/men/21.jpg"
     },
-    ...people
   ]);
 };
