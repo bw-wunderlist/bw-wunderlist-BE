@@ -39,9 +39,6 @@ module.exports = {
     connection: prodDbConnection,
     migrations: {
       directory: "./data/migrations"
-    },
-    seeds: {
-      directory: "./data/seeds"
     }
   }
 };
