@@ -2,7 +2,7 @@ const moment = require('moment')
 
 const repeatIt = JSON.stringify({
   number: 1,
-  timeframe: "d",
+  timeframe: "days",
   occurrences: 5,
 })
 

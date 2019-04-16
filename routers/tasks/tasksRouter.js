@@ -28,7 +28,12 @@ router.get("/:id", async (req, res) => {
         res.status(200).json({
           id: task.id,
           name: task.name,
-          is_complete: task.is_complete
+          desc: task.desc,
+          is_complete: task.is_complete,
+          due_date: task.due_date,
+          repeat: task.repeat,
+          repeat_condition: task.repeat_condition,
+          occurred: task.occurred
         });
       } else {
         res.status(405).json({ message: "Not Your Task" });
@@ -52,37 +57,42 @@ router.get("/complete/:id", async (req, res) => {
           const repeatCondition = JSON.parse(task.repeat_condition);
           if (task.occurred >= repeatCondition.occurrences) {
             await Tasks.completeById(id, task.is_complete);
-            res
-              .status(200)
-              .json({
-                message: `Task is ${
-                  !task.is_complete ? "complete" : "not complete"
-                }`
-              });
-          } else {
-            const newDate = moment
-              .unix(task.due_date)
-              .add(repeatCondition.number, repeatCondition.timeframe)
-              .unix();
-            await Tasks.updateTask(
-              id,
-              { due_date: newDate, occurred: task.occurred + 1 },
-              userId
-            );
-            res.status(200).json({ message: "Create", nextTime: moment.unix(newDate).calendar(), occurred: task.occurred });
-          }
-        } else {
-          await Tasks.completeById(id, task.is_complete);
-          res
-            .status(200)
-            .json({
+            res.status(200).json({
               message: `Task is ${
                 !task.is_complete ? "complete" : "not complete"
               }`
             });
+          } else {
+            let newDate = 0;
+            newDate = moment.unix(task.due_date).add(repeatCondition.number, repeatCondition.timeframe).unix();
+            while(newDate < moment().unix()) {
+              newDate = moment.unix(newDate).add(repeatCondition.number, repeatCondition.timeframe).unix();
+            }
+            let timesOccured = task.occurred + 1;
+            await Tasks.updateTask(
+              id,
+              { due_date: newDate, occurred: timesOccured },
+              userId
+            );
+            res
+              .status(200)
+              .json({
+                message: "Task Repeated",
+                is_complete: task.is_complete,
+                nextTime: newDate,
+                occurred: timesOccured
+              });
+          }
+        } else {
+          await Tasks.completeById(id, task.is_complete);
+          res.status(200).json({
+            message: `Task is ${
+              !task.is_complete ? "complete" : "not complete"
+            }`
+          });
         }
       } else {
-        res.status(405).json({ message: "Not Your Task" });
+        res.status(401).json({ message: "Not Your Task" });
       }
     } else {
       res.status(404).json({ message: "Task Not Found" });
@@ -97,7 +107,7 @@ router.post("/", async (req, res) => {
   const data = req.body;
   try {
     const task = await Tasks.addTask(data, req.decoded.subject);
-    res.status(201).json(task);
+    res.status(201).json({ message: "Task Created" });
   } catch (err) {
     res.status(500).json(err);
   }
