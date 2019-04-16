@@ -1,9 +1,13 @@
 const request = require("supertest");
 const server = require("../../api/server");
+const db = require("../../data/dbConfig.js");
 
 describe("authRouter", () => {
+  afterEach(async () => {
+    await db("users").truncate();
+  });
   describe("register", () => {
-    it.skip("register a user", async () => {
+    it("register a user", async () => {
       const req = await request(server)
         .post("/api/auth/register")
         .send({
@@ -17,6 +21,3 @@ describe("authRouter", () => {
     });
   });
 });
-
-//TODO; this test past on first attempt and then fails. I believe that is to
-//be expected. will check with Maks
