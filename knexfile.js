@@ -1,12 +1,3 @@
-const localPg = {
-  host: 'localhost',
-  database: 'wunderlist',
-  user: 'user',
-  password: 'hired',
-};
-
-const prodDbConnection = process.env.DATABASE_URL || localPg;
-
 module.exports = {
   development: {
     client: "sqlite3",
@@ -36,7 +27,7 @@ module.exports = {
   },
   production: {
     client: "pg",
-    connection: prodDbConnection,
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./data/migrations"
     },

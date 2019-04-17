@@ -20,7 +20,7 @@ for (let i = 0; i < 100; i++) {
       number: Math.floor((Math.random() * 365) + 1),
       timeframe: 'days',
       occurrences: Math.floor((Math.random() * 20) + 1),
-    })
+    }),
   })
 }
 
@@ -48,7 +48,7 @@ exports.seed = function(knex, Promise) {
       desc: "desc for task 3 going here",
       due_date: moment().add(10,'day').unix(),
       repeat: 1,
-      repeat_condition: "test"
+      repeat_condition: repeatIt
     },
     ...tasks
   ]);
