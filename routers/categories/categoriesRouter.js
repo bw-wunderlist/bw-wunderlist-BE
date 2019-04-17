@@ -6,7 +6,7 @@ const Categories = require("./categoriesModel.js");
 
 // GET ALL CATEGORIES BY USER ID
 router.get("/", async (req, res) => {
-  const id = req.decoded.subject;
+  const id = "DnuzdSXCtMgmRWDCRRE1iQ";
   try {
     const categories = await Categories.getAllCategoriesById(id);
     res.status(200).json(categories);

@@ -7,6 +7,5 @@ module.exports = {
 function getAllCategoriesById(id) {
   return db("tasks")
     .where({ user_id: id })
-    .select("categories")
-    .where();
+    .select("id", "name", "categories");
 }
