@@ -15,4 +15,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const userId = req.decoded.subject;
+  try {
+    const cata = await Categories.getCategoryById(id);
+    if (cata) {
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

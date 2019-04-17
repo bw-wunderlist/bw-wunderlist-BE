@@ -9,7 +9,8 @@ module.exports = {
   updateTask,
   removeTask,
   completeById,
-  addToRepeat
+  addToRepeat,
+  removeTaskCompleted
 };
 
 function getAllByUserId(id) {
@@ -57,6 +58,12 @@ function updateTask(id, taskChanges, uid) {
 function removeTask(id, userId) {
   return db("tasks")
     .where({ id: id, user_id: userId })
+    .del();
+}
+
+function removeTaskCompleted(userId) {
+  return db("tasks")
+    .where({ user_id: userId, is_complete: true })
     .del();
 }
 
