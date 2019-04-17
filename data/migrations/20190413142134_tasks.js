@@ -14,9 +14,10 @@ exports.up = function(knex, Promise) {
     tbl.boolean("is_complete").defaultTo(false);
     tbl.integer("due_date");
     tbl.boolean("repeat").defaultTo(false);
-    tbl.json('repeat_condition');
-    tbl.integer('occurred').defaultTo(0);
+    tbl.json("repeat_condition");
+    tbl.integer("occurred").defaultTo(0);
     tbl.timestamps(true, true);
+    tbl.string("categories", 128);
   });
 };
 
