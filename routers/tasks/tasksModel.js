@@ -1,6 +1,6 @@
 const db = require("../../data/dbConfig.js");
 
-const moment = require('moment')
+const moment = require("moment");
 
 module.exports = {
   getAllByUserId,
@@ -23,7 +23,8 @@ function getAllByUserId(id) {
       "due_date",
       "repeat",
       "repeat_condition",
-      "occurred"
+      "occurred",
+      "categories"
     );
 }
 
@@ -71,5 +72,5 @@ function addToRepeat(dueDate, repeatCondition) {
       .add(repeatCondition.number, repeatCondition.timeframe)
       .unix();
   }
-  return newDate
+  return newDate;
 }

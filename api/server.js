@@ -9,6 +9,7 @@ const { authenticate } = require("../auth/authenticate.js");
 const authRouter = require("../routers/auth/authRouter.js");
 const userRouter = require("../routers/users/userRouter");
 const tasksRouter = require("../routers/tasks/tasksRouter");
+const categoriesRouter = require("../routers/categories/categoriesRouter.js");
 const server = express();
 
 //MIDDLEWARE
@@ -20,6 +21,7 @@ server.use(helmet());
 server.use("/api/auth", authRouter);
 server.use("/api/user", authenticate, userRouter);
 server.use("/api/tasks", authenticate, tasksRouter);
+server.use("/api/categories", authenticate, categoriesRouter);
 
 if (process.env.allow_debug) {
   const testsRouter = require("../routers/tests/testRouter");

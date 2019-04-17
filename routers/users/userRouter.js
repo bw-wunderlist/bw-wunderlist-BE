@@ -7,7 +7,6 @@ router.get("/", async (req, res) => {
   const id = req.decoded.subject;
   try {
     const user = await userModel.findById(id);
-    user.username.toLowerCase();
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);

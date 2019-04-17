@@ -16,7 +16,7 @@ for (let i = 0; i < 100; i++) {
     user_id: "DnuzdSXCtMgmRWDCRRE1iQ",
     due_date: moment(faker.date.future()).unix(),
     repeat: faker.random.boolean(),
-    categories: faker.lorem.words(),
+    categories: faker.company.bsBuzz(),
     repeat_condition: JSON.stringify({
       number: Math.floor(Math.random() * 365 + 1),
       timeframe: "days",
