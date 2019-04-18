@@ -53,7 +53,8 @@ function completeById(id, currentStatus) {
 function updateTask(id, taskChanges, uid) {
   return db("tasks")
     .where({ id: id, user_id: uid })
-    .update({ ...taskChanges });
+    .update({ ...taskChanges })
+    .returning("*");
 }
 
 function removeTask(id, userId) {
