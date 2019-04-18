@@ -25,7 +25,13 @@ router.get("/complete/:id", async (req, res) => {
     if (task) {
       if (task.user_id === userId) {
         if (task.repeat) {
-          const repeatCondition = task.repeat_condition;
+// THIS IS A WEIRD HEROKU PG ISSUE. WE HAVE BROKE THE DEV SERVER FOR THE
+// GREATER GOOD OF THE GROUP. THERE BE DRAGONS HERE. LOOK OUT
+          if (process.env.DB_ENV === "production") {
+            const repeatCondition = task.repeat_condition;
+          } else {
+            const repeatCondition = JSON.parse(task.repeat_condition);
+          }
           if (task.occurred >= repeatCondition.occurrences) {
             await Tasks.completeById(id, task.is_complete);
             res.status(200).json({
