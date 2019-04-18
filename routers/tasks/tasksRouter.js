@@ -25,7 +25,7 @@ router.get("/complete/:id", async (req, res) => {
     if (task) {
       if (task.user_id === userId) {
         if (task.repeat) {
-          const repeatCondition = JSON.parse(task.repeat_condition);
+          const repeatCondition = task.repeat_condition;
           if (task.occurred >= repeatCondition.occurrences) {
             await Tasks.completeById(id, task.is_complete);
             res.status(200).json({
