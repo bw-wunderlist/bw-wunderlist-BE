@@ -1,6 +1,6 @@
 const db = require("../../data/dbConfig.js");
 
-const moment = require('moment')
+const moment = require("moment");
 
 module.exports = {
   getAllByUserId,
@@ -9,7 +9,8 @@ module.exports = {
   updateTask,
   removeTask,
   completeById,
-  addToRepeat
+  addToRepeat,
+  removeTaskCompleted
 };
 
 function getAllByUserId(id) {
@@ -23,7 +24,8 @@ function getAllByUserId(id) {
       "due_date",
       "repeat",
       "repeat_condition",
-      "occurred"
+      "occurred",
+      "categories"
     );
 }
 
@@ -59,6 +61,12 @@ function removeTask(id, userId) {
     .del();
 }
 
+function removeTaskCompleted(userId) {
+  return db("tasks")
+    .where({ user_id: userId, is_complete: true })
+    .del();
+}
+
 function addToRepeat(dueDate, repeatCondition) {
   let newDate = 0;
   newDate = moment
@@ -71,5 +79,5 @@ function addToRepeat(dueDate, repeatCondition) {
       .add(repeatCondition.number, repeatCondition.timeframe)
       .unix();
   }
-  return newDate
+  return newDate;
 }
