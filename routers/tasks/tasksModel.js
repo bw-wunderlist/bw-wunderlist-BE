@@ -46,7 +46,8 @@ function addTask(task, userId) {
 function completeById(id, currentStatus) {
   return db("tasks")
     .where({ id })
-    .update({ is_complete: !currentStatus });
+    .update({ is_complete: !currentStatus })
+    .returning("*");
 }
 
 function updateTask(id, taskChanges, uid) {
