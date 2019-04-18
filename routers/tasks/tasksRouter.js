@@ -17,35 +17,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET SINGLE TASK BY ID
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const userId = req.decoded.subject;
-  try {
-    const task = await Tasks.getById(id);
-    if (task) {
-      if (task.user_id === userId) {
-        res.status(200).json({
-          id: task.id,
-          name: task.name,
-          desc: task.desc,
-          is_complete: task.is_complete,
-          due_date: task.due_date,
-          repeat: task.repeat,
-          repeat_condition: task.repeat_condition,
-          occurred: task.occurred
-        });
-      } else {
-        res.status(405).json({ message: "Not Your Task" });
-      }
-    } else {
-      res.status(404).json({ message: "Task Not Found" });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 router.get("/complete/:id", async (req, res) => {
   const { id } = req.params;
   const userId = req.decoded.subject;
@@ -112,6 +83,35 @@ router.post("/", async (req, res) => {
   try {
     const task = await Tasks.addTask(data, req.decoded.subject);
     res.status(201).json({ message: "Task Created" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET SINGLE TASK BY ID
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const userId = req.decoded.subject;
+  try {
+    const task = await Tasks.getById(id);
+    if (task) {
+      if (task.user_id === userId) {
+        res.status(200).json({
+          id: task.id,
+          name: task.name,
+          desc: task.desc,
+          is_complete: task.is_complete,
+          due_date: task.due_date,
+          repeat: task.repeat,
+          repeat_condition: task.repeat_condition,
+          occurred: task.occurred
+        });
+      } else {
+        res.status(405).json({ message: "Not Your Task" });
+      }
+    } else {
+      res.status(404).json({ message: "Task Not Found" });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
