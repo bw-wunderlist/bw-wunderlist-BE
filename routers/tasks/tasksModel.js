@@ -26,7 +26,7 @@ function getAllByUserId(id) {
       "repeat_condition",
       "occurred",
       "categories"
-    ).orderBy('name', 'desc');
+    ).orderBy('name', 'asc');
 }
 
 function getById(id) {
