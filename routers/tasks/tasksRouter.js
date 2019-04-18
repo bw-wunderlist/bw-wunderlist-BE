@@ -136,6 +136,17 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE ALL TASKS FOR A SELECTED ID
+router.delete("/deletecompleted", async (req, res) => {
+  const id = req.decoded.subject;
+  try {
+    const task = await Tasks.removeTaskCompleted(id);
+    res.status(200).json({ message: "Completed tasks removed!" });
+  } catch (err) {
+    res.status(500).json({ message: `Internal Error, ${err}` });
+  }
+});
+
 // DELETE TASK
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

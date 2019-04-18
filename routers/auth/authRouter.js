@@ -21,7 +21,10 @@ function generateToken(user) {
 }
 
 router.post("/register", async (req, res) => {
-  const regData = req.body;
+  const lowerCase = req.body.username.toLowerCase();
+  console.log(lowerCase);
+  let regData = { ...req.body, username: lowerCase };
+  console.log(regData);
   if (!regData.username || !regData.password) {
     res.Status(400).json({ message: `Must provide all Info. Bad Request` });
   }
@@ -56,7 +59,10 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const loginData = req.body;
+  const lowerCase = req.body.username.toLowerCase();
+  console.log(lowerCase);
+  let loginData = { ...req.body, username: lowerCase };
+  console.log(loginData);
   if (!loginData.username || !loginData.password) {
     res
       .status(400)
